@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wishlist - AnonymousOnline</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        #page-header {
+            background-image: url('images/banner.png');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            padding: 60px 20px;
+            background-color: rgba(0,0,0,0.5);
+            background-blend-mode: overlay;
+        }
+        #page-header h2 {
+            color: darkcyan;
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+        #page-header p {
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .wishlist-container {
+            background: white;
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .wishlist-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .wishlist-table th {
+            text-align: left;
+            padding: 15px;
+            background-color: rgb(209, 232, 242);
+            color: darkcyan;
+            font-weight: 600;
+        }
+        .wishlist-table td {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            vertical-align: middle;
+        }
+        .wishlist-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .product-title {
+            color: #333;
+            font-weight: 500;
+        }
+        .product-price {
+            color: orangered;
+            font-weight: 600;
+        }
+        .add-to-cart-btn {
+            background: darkcyan;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+        }
+        .add-to-cart-btn:hover {
+            background: orangered;
+        }
+        .remove-wishlist {
+            color: #ff4444;
+            cursor: pointer;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        .remove-wishlist:hover {
+            color: #cc0000;
+        }
+        .move-to-cart {
+            color: darkcyan;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        .empty-wishlist {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .empty-wishlist i {
+            font-size: 80px;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        .empty-wishlist h3 {
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .continue-shopping {
+            display: inline-block;
+            background: darkcyan;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .continue-shopping:hover {
+            background: orangered;
+        }
+
+        .wishlist-actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .clear-wishlist {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .clear-wishlist:hover {
+            background: #cc0000;
+        }
+        .add-all-to-cart {
+            background: darkcyan;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .add-all-to-cart:hover {
+            background: orangered;
+        }
+
+        @media (max-width: 768px) {
+            .wishlist-table th, .wishlist-table td {
+                padding: 8px;
+            }
+            .wishlist-img {
+                width: 50px;
+                height: 50px;
+            }
+            .add-to-cart-btn {
+                padding: 5px 10px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section id="header">
+        <a href="index.html"><img src="images/logo.png" class="logo" alt="logo"></a>
+        <div>
+            <ul id="navbar">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="account.html">Account</a></li>
+                <li><a href="cart.html"><i class="fa-solid fa-cart-arrow-down"></i>
+                    <span id="cart-count" style="background: orangered; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px; margin-left: 5px;">0</span>
+                </a></li>
+                <a href="#" id="close"><i class="fa-solid fa-xmark"></i></a>
+            </ul>
+        </div>
+        <div id="mobile">
+            <a href="cart.html"><i class="fa-solid fa-cart-arrow-down"></i></a>
+            <i id="bar" class="fa-solid fa-bars"></i>
+        </div>
+    </section>
+
+    <section id="page-header">
+        <h2>#MyWishlist</h2>
+        <p>Your saved items for later</p>
+    </section>
+
+    <section id="wishlist" class="section-p1">
+        <div id="wishlist-content" class="wishlist-container">
+            <!-- Wishlist content will be loaded here -->
+        </div>
+    </section>
+
+    <section id="newsletter" class="section-p1 section-m1">
+        <div class="newstext">
+            <h4>Sign Up For Newsletters</h4>
+            <p>Get E-mail updates about our latest shop and <span>special offers.</span></p>
+        </div>
+        <div class="form">
+            <input type="text" id="newsletterEmail" placeholder="Your email address">
+            <button class="normal" onclick="subscribeNewsletter()">Sign Up</button>
+        </div>
+    </section>
+
+        <div class="copyright">
+            <p>&copy;2026 Anonymous online Traders. All Rights Reserved</p>
+        </div>
+
+    <script>
+        // ========== PRODUCT DATABASE ==========
+        const products = [
+            { id: 1, brand: "JBL", name: "Soundbar JBL Cinema 2.1 chanel SB180", price: 1014767, img: "images/jbl.jpg", stars: 5 },
+            { id: 2, brand: "Hisense", name: "Hisense HS218 2.1ch Sound Bar", price: 590000, img: "images/Hisense.jpg", stars: 4 },
+            { id: 3, brand: "JBL", name: "Original JBL Flip 6 Portable Speaker", price: 472661, img: "images/Original.jpg", stars: 5 },
+            { id: 4, brand: "Samsung", name: "Samsung HW-C450 B-series 2.1ch Soundbar", price: 660000, img: "images/Samsung.jpg", stars: 4 },
+            { id: 5, brand: "Ultimea", name: "Ultimea Poseidon D80 7.1 chanel", price: 1809523, img: "images/ultimea.jpg", stars: 5 },
+            { id: 6, brand: "LG", name: "LG SMART TV 55 INCH", price: 2100000, img: "images/LG smart.jpg", stars: 5 },
+            { id: 7, brand: "Lenovo", name: "Lenovo Legion 5 Pro 16\" Laptop", price: 5090000, img: "images/Lenovo.jpg", stars: 5 },
+            { id: 8, brand: "Xbox", name: "Xbox Series X 1TB", price: 3000000, img: "images/Xbox.jpg", stars: 5 }
+        ];
+
+        // ========== WISHLIST FUNCTIONS ==========
+        function getWishlist() {
+            const wishlist = localStorage.getItem('wishlist');
+            return wishlist ? JSON.parse(wishlist) : [];
+        }
+
+        function saveWishlist(wishlist) {
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            updateWishlistCount();
+        }
+
+        function updateWishlistCount() {
+            const wishlist = getWishlist();
+            const wishlistCount = wishlist.length;
+            const wishlistCountSpan = document.getElementById('wishlist-count');
+            if (wishlistCountSpan) {
+                wishlistCountSpan.textContent = wishlistCount;
+            }
+        }
+
+        function addToWishlist(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            let wishlist = getWishlist();
+            const existingItem = wishlist.find(item => item.id === productId);
+            
+            if (existingItem) {
+                showToast(`⚠️ ${product.brand} ${product.name.substring(0, 30)}... is already in your wishlist!`);
+            } else {
+                wishlist.push({
+                    id: product.id,
+                    name: product.name,
+                    brand: product.brand,
+                    price: product.price,
+                    img: product.img
+                });
+                saveWishlist(wishlist);
+                showToast(`❤️ ${product.brand} ${product.name.substring(0, 30)}... added to wishlist!`);
+            }
+            renderWishlistPage();
+        }
+
+        function removeFromWishlist(productId) {
+            let wishlist = getWishlist();
+            const product = products.find(p => p.id === productId);
+            wishlist = wishlist.filter(item => item.id !== productId);
+            saveWishlist(wishlist);
+            if (product) {
+                showToast(`🗑️ Removed ${product.brand} ${product.name.substring(0, 30)}... from wishlist`);
+            }
+            renderWishlistPage();
+        }
+
+        function clearWishlist() {
+            if (confirm('Are you sure you want to clear your entire wishlist?')) {
+                saveWishlist([]);
+                showToast(`🗑️ Wishlist cleared!`);
+                renderWishlistPage();
+            }
+        }
+
+        // ========== CART FUNCTIONS (for moving items to cart) ==========
+        function getCart() {
+            const cart = localStorage.getItem('shoppingCart');
+            return cart ? JSON.parse(cart) : [];
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem('shoppingCart', JSON.stringify(cart));
+            updateCartCount();
+        }
+
+        function updateCartCount() {
+            const cart = getCart();
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartCountSpan = document.getElementById('cart-count');
+            if (cartCountSpan) {
+                cartCountSpan.textContent = totalItems;
+            }
+        }
+
+        function addToCart(productId, quantity = 1) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const cart = getCart();
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    brand: product.brand,
+                    price: product.price,
+                    img: product.img,
+                    quantity: quantity
+                });
+            }
+            saveCart(cart);
+            return true;
+        }
+
+        function moveToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (addToCart(productId, 1)) {
+                removeFromWishlist(productId);
+                showToast(`🛒 Moved ${product.brand} ${product.name.substring(0, 30)}... to cart!`);
+            }
+        }
+
+        function addAllToCart() {
+            const wishlist = getWishlist();
+            if (wishlist.length === 0) {
+                showToast('Your wishlist is empty!');
+                return;
+            }
+            
+            wishlist.forEach(item => {
+                addToCart(item.id, 1);
+            });
+            
+            saveWishlist([]);
+            showToast(`🛒 Added all ${wishlist.length} items to cart!`);
+            renderWishlistPage();
+        }
+
+        // ========== UI FUNCTIONS ==========
+        function formatPrice(price) {
+            return 'UGX ' + price.toLocaleString();
+        }
+
+        function showToast(message) {
+            const existingToast = document.querySelector('.toast-notification');
+            if (existingToast) existingToast.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            toast.style.position = 'fixed';
+            toast.style.bottom = '30px';
+            toast.style.right = '30px';
+            toast.style.backgroundColor = '#28a745';
+            toast.style.color = 'white';
+            toast.style.padding = '15px 25px';
+            toast.style.borderRadius = '8px';
+            toast.style.zIndex = '1000';
+            toast.style.animation = 'slideIn 0.3s ease';
+            toast.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+            toast.innerHTML = `<i class="fa-solid fa-check-circle" style="margin-right: 10px;"></i>${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function renderWishlistPage() {
+            const container = document.getElementById('wishlist-content');
+            const wishlist = getWishlist();
+            
+            if (!container) return;
+            
+            if (wishlist.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-wishlist">
+                        <i class="fa-regular fa-heart"></i>
+                        <h3>Your wishlist is empty</h3>
+                        <p>Save your favorite items here to buy them later.</p>
+                        <a href="products.html" class="continue-shopping">Continue Shopping →</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            let wishlistHTML = `
+                <table class="wishlist-table">
+                    <thead>
+                        <tr><th>Product</th><th>Price</th><th>Actions</th><th></th></tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            wishlist.forEach(item => {
+                const product = products.find(p => p.id === item.id);
+                if (product) {
+                    wishlistHTML += `
+                        <tr>
+                            <td>
+                                <img src="${item.img}" class="wishlist-img" alt="${item.name}" 
+                                     onerror="this.src='https://placehold.co/80x80/008b8b/white?text=${item.brand}'">
+                                <div style="display: inline-block; margin-left: 15px;">
+                                    <div class="product-title">${item.name}</div>
+                                    <small style="color: #888;">${item.brand}</small>
+                                </div>
+                            </td>
+                            <td class="product-price">${formatPrice(item.price)}</td>
+                            <td>
+                                <button class="add-to-cart-btn" onclick="moveToCart(${item.id})">
+                                    <i class="fa-solid fa-cart-arrow-down"></i> Move to Cart
+                                </button>
+                            </td>
+                            <td>
+                                <i class="fa-solid fa-trash-can remove-wishlist" onclick="removeFromWishlist(${item.id})"></i>
+                            </td>
+                        </tr>
+                    `;
+                }
+            });
+            
+            wishlistHTML += `
+                    </tbody>
+                </table>
+                <div class="wishlist-actions">
+                    <button class="clear-wishlist" onclick="clearWishlist()">
+                        <i class="fa-regular fa-trash-can"></i> Clear Wishlist
+                    </button>
+                    <button class="add-all-to-cart" onclick="addAllToCart()">
+                        <i class="fa-solid fa-cart-shopping"></i> Add All to Cart
+                    </button>
+                </div>
+            `;
+            
+            container.innerHTML = wishlistHTML;
+        }
+
+        function subscribeNewsletter() {
+            const email = document.getElementById('newsletterEmail');
+            if (email.value && email.value.includes('@')) {
+                alert(`Thanks for subscribing! ${email.value} will receive our latest offers.`);
+                email.value = '';
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        }
+
+        // Mobile menu toggle
+        const bar = document.getElementById('bar');
+        const nav = document.getElementById('navbar');
+        const close = document.getElementById('close');
+        
+        if (bar && nav && close) {
+            bar.addEventListener('click', () => nav.classList.add('active'));
+            close.addEventListener('click', () => nav.classList.remove('active'));
+        }
+
+        // Add animation style
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            renderWishlistPage();
+            updateCartCount();
+            updateWishlistCount();
+        });
+    </script>
+</body>
+</html>

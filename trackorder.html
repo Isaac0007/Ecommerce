@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track My Order - AnonymousOnline</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        #page-header {
+            background-image: url('images/banner.png');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            padding: 60px 20px;
+            background-color: rgba(0,0,0,0.5);
+            background-blend-mode: overlay;
+        }
+        #page-header h2 {
+            color: darkcyan;
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+        #page-header p {
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+        }
+        .track-container {
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .track-form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .track-form input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .track-btn {
+            background: darkcyan;
+            color: white;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+        .track-btn:hover {
+            background: orangered;
+        }
+        .order-status {
+            margin-top: 40px;
+            padding: 30px;
+            background: rgb(209, 232, 242);
+            border-radius: 20px;
+            display: none;
+        }
+        .status-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+        }
+        .step .circle {
+            width: 50px;
+            height: 50px;
+            background: #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+            color: white;
+        }
+        .step.completed .circle {
+            background: darkcyan;
+        }
+        .step.active .circle {
+            background: orangered;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            color: #555;
+        }
+        .step .label {
+            font-size: 12px;
+            color: #555;
+        }
+        .order-details {
+            text-align: left;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <section id="header">
+        <a href="index.html"><img src="images/logo.png" class="logo" alt="logo"></a>
+        <div>
+            <ul id="navbar">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="account.html">Account</a></li>
+                <li><a href="cart.html"><i class="fa-solid fa-cart-arrow-down"></i></a></li>
+                <a href="#" id="close"><i class="fa-solid fa-xmark"></i></a>
+            </ul>
+        </div>
+        <div id="mobile">
+            <a href="cart.html"><i class="fa-solid fa-cart-arrow-down"></i></a>
+            <i id="bar" class="fa-solid fa-bars"></i>
+        </div>
+    </section>
+
+    <section id="page-header">
+        <h2>#TrackOrder</h2>
+        <p>Enter your order number to track your delivery</p>
+    </section>
+
+    <section class="section-p1">
+        <div class="track-container">
+            <div class="track-form">
+                <input type="text" id="orderNumber" placeholder="Enter Order Number (e.g., #ANON-12345)">
+                <button class="track-btn" onclick="trackOrder()">Track Order →</button>
+            </div>
+            
+            <div id="orderStatus" class="order-status">
+                <h3 style="color: darkcyan;">Order Status</h3>
+                <div class="status-steps" id="statusSteps">
+                    <div class="step"><div class="circle">1</div><div class="label">Order Placed</div></div>
+                    <div class="step"><div class="circle">2</div><div class="label">Processing</div></div>
+                    <div class="step"><div class="circle">3</div><div class="label">Shipped</div></div>
+                    <div class="step"><div class="circle">4</div><div class="label">Out for Delivery</div></div>
+                    <div class="step"><div class="circle">5</div><div class="label">Delivered</div></div>
+                </div>
+                <div class="order-details" id="orderDetails"></div>
+            </div>
+        </div>
+    </section>
+
+        <div class="copyright">
+            <p>&copy;2026 Anonymous online Traders. All Rights Reserved</p>
+        </div>
+
+    <script src="script.js"></script>
+    <script>
+        function trackOrder() {
+            const orderNumber = document.getElementById('orderNumber').value;
+            const statusDiv = document.getElementById('orderStatus');
+            const orderDetails = document.getElementById('orderDetails');
+            
+            if (!orderNumber) {
+                alert('Please enter your order number');
+                return;
+            }
+            
+            statusDiv.style.display = 'block';
+            
+            // Demo order status - in real website, this would fetch from database
+            const steps = document.querySelectorAll('.step');
+            steps.forEach((step, index) => {
+                step.classList.remove('completed', 'active');
+                if (index < 2) {
+                    step.classList.add('completed');
+                } else if (index === 2) {
+                    step.classList.add('active');
+                }
+            });
+            
+            orderDetails.innerHTML = `
+                <p><strong>Order Number:</strong> ${orderNumber}</p>
+                <p><strong>Order Date:</strong> April 25, 2026</p>
+                <p><strong>Estimated Delivery:</strong> May 2, 2026</p>
+                <p><strong>Current Location:</strong> In transit - Kampala sorting center</p>
+                <p><strong>Carrier:</strong> AnonTech Logistics</p>
+                <p style="margin-top: 15px;"><i class="fa-solid fa-truck"></i> Your package has been shipped and is on its way!</p>
+            `;
+            
+            // Scroll to status
+            statusDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

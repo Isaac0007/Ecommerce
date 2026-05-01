@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - AnonymousOnline</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <style>
+        #page-header {
+            background-image: url('images/banner.png');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            padding: 60px 20px;
+            background-color: rgba(0,0,0,0.5);
+            background-blend-mode: overlay;
+        }
+        #page-header h2 {
+            color: darkcyan;
+            font-size: 42px;
+        }
+        .account-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: center;
+        }
+        .login-form, .register-form {
+            flex: 1;
+            min-width: 350px;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .login-form h2, .register-form h2 {
+            color: darkcyan;
+            margin-bottom: 25px;
+            border-left: 4px solid orangered;
+            padding-left: 15px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: darkcyan;
+        }
+        .btn-primary {
+            width: 100%;
+            background: darkcyan;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        .btn-primary:hover {
+            background: orangered;
+        }
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .form-footer a {
+            color: orangered;
+            text-decoration: none;
+        }
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+        .divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background: #ddd;
+        }
+        .divider::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background: #ddd;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            color: #555;
+        }
+        .divider span {
+            background: white;
+            padding: 0 15px;
+            color: #888;
+        }
+        .social-login {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+        .social-btn:hover {
+            background: #f5f5f5;
+        }
+        .social-btn i {
+            margin-right: 8px;
+        }
+        .fa-google {
+            color: #DB4437;
+        }
+        .fa-facebook {
+            color: #4267B2;
+        }
+        @media (max-width: 768px) {
+            .login-form, .register-form {
+                min-width: 100%;
+            }
+        }
+
+    </style>
+    <section id="header">
+        <a href="index.html"><img src="images/logo.png" class="logo" alt="logo"></a>
+        <div>
+            <ul id="navbar">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a class="active" href="account.html">Account</a></li>
+                <li><a href="cart.html"><i class="fa-solid fa-cart-arrow-down"></i></a></li>
+                <a href="#" id="close"><i class="fa-solid fa-xmark"></i></a>
+            </ul>
+        </div>
+        <div id="mobile">
+            <a href="cart.html"><i class="fa-solid fa-cart-arrow-down"></i></a>
+            <i id="bar" class="fa-solid fa-bars"></i>
+        </div>
+    </section>
+
+    <section id="page-header">
+        <h2>#MyAccount</h2>
+        <p>Sign in or create a new account to track orders & save preferences</p>
+    </section>
+
+    <section id="account" class="section-p1">
+        <div class="account-container">
+            <div class="login-form">
+                <h2>Login to Your Account</h2>
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Sign In</button>
+                    <div class="form-footer">
+                        <a href="#">Forgot Password?</a>
+                    </div>
+                </form>
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+                <div class="social-login">
+                    <button class="social-btn" onclick="socialLogin('google')"><i class="fa-brands fa-google"></i> Google</button>
+                    <button class="social-btn" onclick="socialLogin('facebook')"><i class="fa-brands fa-facebook"></i> Facebook</button>
+                </div>
+            </div>
+
+            <div class="register-form">
+                <h2>Create New Account</h2>
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input type="text" id="regName" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" id="regEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Phone Number</label>
+                        <input type="tel" id="regPhone" placeholder="Enter your phone number">
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="regPassword" placeholder="Create a password" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Confirm Password</label>
+                        <input type="password" id="regConfirmPassword" placeholder="Confirm your password" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Create Account</button>
+                    <div class="form-footer">
+                        <p>By creating an account, you agree to our <a href="#">Terms & Conditions</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="newsletter" class="section-p1 section-m1">
+        <div class="newstext">
+            <h4>Sign Up For Newsletters</h4>
+            <p>Get E-mail updates about our latest shop and <span>special offers.</span></p>
+        </div>
+        <div class="form">
+            <input type="text" placeholder="Your email address">
+            <button class="normal">Sign Up</button>
+        </div>
+    </section>
+
+    
+        <div class="copyright">
+            <p>&copy;2026 Anonymous online Traders. All Rights Reserved</p>
+        </div>
+
+
+    <script src="script.js"></script>
+    <script>
+        
+    </script>
+</body>
+</html>
